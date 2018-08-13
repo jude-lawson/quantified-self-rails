@@ -31,4 +31,27 @@ RSpec.describe 'Food Requests' do
       expect(response.body).to eq({ error: 'Item not found' }.to_json)
     end
   end
+
+  describe 'POST /api/v1/foods' do
+    it 'should create a new food and return that object' do
+      # Given this data
+      new_food_data = { "food": { "name": "Dumplings", "calories": 900} }.to_json
+      # Should return this object from databse
+      new_food = Food.new(name: "Dumplings", calories: 900)
+
+      post '/api/v1/foods', params: new_food_data
+
+      expect(response).to be_successful
+      expect(response.body).to eq(new_food.to_json)
+    end
+
+    it 'should return 404 with error message if fodd creation is not successful' do
+    end
+
+    it 'should fail if the name is not included' do
+    end
+
+    it 'should fail if the calories count is not included' do
+    end
+  end
 end
