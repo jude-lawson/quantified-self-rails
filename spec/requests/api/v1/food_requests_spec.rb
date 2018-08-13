@@ -9,7 +9,6 @@ RSpec.describe 'Food Requests' do
 
   describe 'GET /api/v1/foods' do
     it 'should return all of the foods currently in the database' do
-
       get '/api/v1/foods'
 
       expect(response).to be_successful
@@ -19,7 +18,10 @@ RSpec.describe 'Food Requests' do
 
   describe 'GET /api/v1/food/:id' do
     it 'should return a single food if found' do
+      get "/api/v1/foods/#{@food2.id}"
 
+      expect(response).to be_succesful
+      expect(response.body).to eq(@food2.to_json)
     end
 
     it 'should return 404 if not found' do
