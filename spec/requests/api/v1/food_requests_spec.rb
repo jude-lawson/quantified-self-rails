@@ -8,7 +8,7 @@ RSpec.describe 'Food Requests' do
       get '/api/v1/foods'
 
       expect(response).to be_successful
-      expect(response.body).to eq(food1.to_json)
+      expect(response.body).to eq([food1.to_json])
     end
   end
 end
