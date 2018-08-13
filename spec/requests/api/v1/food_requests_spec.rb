@@ -11,4 +11,14 @@ RSpec.describe 'Food Requests' do
       expect(response.body).to eq([food1].to_json)
     end
   end
+
+  describe 'GET /api/v1/food/:id' do
+    it 'should return a single food if found' do
+      
+    end
+
+    it 'should return 404 if not found' do
+
+    end
+  end
 end
