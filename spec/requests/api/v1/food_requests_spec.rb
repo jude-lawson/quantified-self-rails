@@ -35,7 +35,7 @@ RSpec.describe 'Food Requests' do
   describe 'POST /api/v1/foods' do
     it 'should create a new food and return that object' do
       # Given this data
-      new_food_data = { "food": { "name": "Dumplings", "calories": 900} }.to_json
+      new_food_data = { "food": { "name": "Dumplings", "calories": 900 } }.to_json
       # Should return this object from databse
       new_food = Food.new(name: "Dumplings", calories: 900)
 
@@ -45,13 +45,31 @@ RSpec.describe 'Food Requests' do
       expect(response.body).to eq(new_food.to_json)
     end
 
-    it 'should return 404 with error message if fodd creation is not successful' do
+    it 'should return 404 with error message if food creation is not successful' do
+      broken_food = { "name": "Dumplings" }.to_json
+
+      post '/api/v1/foods', params: broken_food
+
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({ error: 'Item not created' }.to_json)
     end
 
     it 'should fail if the name is not included' do
+      no_name_food = { "food": { "calories": 900 } }.to_json
+
+      post '/api/v1/foods', params: no_name_food
+
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({ error: 'Name attribute is required' }.to_json)
     end
 
     it 'should fail if the calories count is not included' do
+      no_name_food = { "food": { "name": "Dumplings" } }.to_json
+
+      post '/api/v1/foods', params: no_name_food
+
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({ error: 'Calories attribute is required' }.to_json)
     end
   end
 end
