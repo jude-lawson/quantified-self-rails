@@ -34,19 +34,16 @@ RSpec.describe 'Food Requests' do
 
   describe 'POST /api/v1/foods' do
     it 'should create a new food and return that object' do
-      # Given this data
       new_food_data = { "food": { "name": "Dumplings", "calories": 900 } }.to_json
-      # Should return this object from databse
-      new_food = Food.new(name: "Dumplings", calories: 900)
-
+      
       post '/api/v1/foods', params: new_food_data
 
       expect(response).to be_successful
-      expect(response.body).to eq(new_food.to_json)
+      expect(response.body).to eq(Food.last.to_json)
     end
 
     it 'should return 404 with error message if food creation is not successful' do
-      broken_food = { "name": "Dumplings" }.to_json
+      broken_food = { "food": "Dumplings" }.to_json
 
       post '/api/v1/foods', params: broken_food
 
@@ -60,7 +57,7 @@ RSpec.describe 'Food Requests' do
       post '/api/v1/foods', params: no_name_food
 
       expect(response).to have_http_status(400)
-      expect(response.body).to eq({ error: 'Name attribute is required' }.to_json)
+      expect(response.body).to eq({ error: 'Validation failed: Name can\'t be blank' }.to_json)
     end
 
     it 'should fail if the calories count is not included' do
@@ -69,7 +66,7 @@ RSpec.describe 'Food Requests' do
       post '/api/v1/foods', params: no_name_food
 
       expect(response).to have_http_status(400)
-      expect(response.body).to eq({ error: 'Calories attribute is required' }.to_json)
+      expect(response.body).to eq({ error: 'Validation failed: Calories can\'t be blank' }.to_json)
     end
   end
 end
