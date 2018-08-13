@@ -25,7 +25,10 @@ RSpec.describe 'Food Requests' do
     end
 
     it 'should return 404 if not found' do
+      get "/api/v1/foods/#{@food2.id + 1}"
 
+      expect(response).to be_unsuccessful
+      expect(response.body).to eq({ error: '404 item not found' }.to_json)
     end
   end
 end
