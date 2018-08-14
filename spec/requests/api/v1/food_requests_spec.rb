@@ -96,4 +96,20 @@ RSpec.describe 'Food Requests' do
       expect(response.body).to eq({ error: 'Food not updated' }.to_json)
     end
   end
+
+  describe 'DELTE /api/v1/foods/:id' do
+    it 'should delete the food specified by the given id' do
+      delete "/api/v1/foods/#{@food1.id}"
+
+      expect(response).to have_http_status(204)
+      expect{ Food.find(@food1.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+
+    it 'should return a 400 with an error message if the item was not deleted' do
+      delete "/api/v1/foods/#{@food2.id + 1}"
+
+      expect(response).to have_http_status(404)
+      expect(response.body).to eq({ error: 'Item not found' }.to_json)
+    end
+  end
 end
