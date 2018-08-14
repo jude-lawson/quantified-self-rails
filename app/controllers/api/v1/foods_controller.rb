@@ -25,5 +25,14 @@ class Api::V1::FoodsController < ApplicationController
       end
     end
   end
+
+  def update
+    begin
+      Food.find(params[:id]).update(JSON.parse(request.body.string)['food'])
+      render json: Food.find(params[:id])
+    rescue
+      render json: { error: 'Food not updated' }, status: 400
+    end
+  end
 end
 

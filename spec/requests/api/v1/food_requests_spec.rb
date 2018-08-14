@@ -90,7 +90,7 @@ RSpec.describe 'Food Requests' do
     it 'should return a 400 with an error message if unsuccessful' do
       updated_food_data = { "food": { "name": "Mint", "calories": "14"} }.to_json
 
-      patch "/api/v1/foods/#{@food1.id + 1}", params: updated_food_data
+      patch "/api/v1/foods/#{@food2.id + 1}", params: updated_food_data
 
       expect(response).to have_http_status(400)
       expect(response.body).to eq({ error: 'Food not updated' }.to_json)
