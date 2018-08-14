@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       # Meals
       get '/meals', to: 'meals#index'
       get '/meals/:meal_id/foods', to: 'meals#show'
+
+      # Meal Foods
+      post '/meals/:meal_id/foods/:id', to: 'meal_foods#create'
     end
   end
 end
