@@ -42,4 +42,51 @@ RSpec.describe 'Meal Food Requests' do
       expect(response.body).to eq({ message: "Successfully added #{@food1.name} to #{@meal1.name}" }.to_json)
     end
   end
+
+  describe 'DELETE /api/v1/meals/:meal_id/foods/:id' do
+    it 'should remove the food specifiied by the id from the meal specified by the meal_id' do
+      meal_food = MealFood.create!(meal: @meal1, food: @food1)
+
+      delete "/api/v1/meals/#{@meal1.id}/foods/#{@food1.id}"
+
+      expect(response).to be_successful
+      expect(Meal.find(@meal1.id).foods).to eq([])
+    end
+    
+    it 'should remove the MealFood database entry that\'s connects the meal and food' do
+      meal_food = MealFood.create!(meal: @meal1, food: @food1)
+
+      delete "/api/v1/meals/#{@meal1.id}/foods/#{@food1.id}"
+      
+      expect(response).to be_successful
+      expect{ MealFood.find(meal_food.id) }.to raise_exception(ActiveRecord::RecordNotFound) 
+    end
+
+    it 'should return a 404 with an error message if the meal cannot be found' do
+      meal_food = MealFood.create!(meal: @meal1, food: @food1)
+
+      delete "/api/v1/meals/#{@meal1.id + 1}/foods/#{@food1.id}"
+
+      expect(response).to have_http_status(404)
+      expect(response.body).to eq({ error: 'Meal not found' }.to_json)
+    end
+
+    it 'should return a 404 with an error message if the food cannot be found' do
+      meal_food = MealFood.create!(meal: @meal1, food: @food1)
+
+      delete "/api/v1/meals/#{@meal1.id}/foods/#{@food1.id + 1}"
+
+      expect(response).to have_http_status(404)
+      expect(response.body).to eq({ error: 'Food not found' }.to_json)
+    end
+
+    it 'should return a success message if successful' do
+      meal_food = MealFood.create!(meal: @meal1, food: @food1)
+
+      delete "/api/v1/meals/#{@meal1.id}/foods/#{@food1.id}"
+
+      expect(response).to be_successful
+      expect(response.body).to eq({ message: "Successfully removed #{@food1.name} from #{@meal1.name}" }.to_json)
+    end
+  end
 end
