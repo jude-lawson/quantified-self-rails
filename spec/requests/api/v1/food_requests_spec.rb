@@ -97,7 +97,7 @@ RSpec.describe 'Food Requests' do
     end
   end
 
-  describe 'DELTE /api/v1/foods/:id' do
+  describe 'DELETE /api/v1/foods/:id' do
     it 'should delete the food specified by the given id' do
       delete "/api/v1/foods/#{@food1.id}"
 
