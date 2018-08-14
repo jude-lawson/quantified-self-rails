@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
       # Meals
       get '/meals', to: 'meals#index'
+      get '/meals/:meal_id/foods', to: 'meals#show'
     end
   end
 end

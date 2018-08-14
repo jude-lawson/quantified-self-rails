@@ -48,7 +48,7 @@ RSpec.describe 'Meal Requests' do
     end
 
     it 'should return a 404 with an error message if the specified meal is not found' do
-      get "/api/v1/meals/#{@meal2.id + 1}"
+      get "/api/v1/meals/#{@meal2.id + 1}/foods"
 
       expect(response).to have_http_status(404)
       expect(response.body).to eq({ error: "Meal not found" }.to_json)
