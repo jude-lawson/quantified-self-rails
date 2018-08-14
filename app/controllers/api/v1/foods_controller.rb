@@ -34,5 +34,14 @@ class Api::V1::FoodsController < ApplicationController
       render json: { error: 'Food not updated' }, status: 400
     end
   end
+
+  def destroy
+    begin
+      Food.find(params[:id]).destroy
+      render status: 204
+    rescue
+      render json: { error: 'Item not found' }, status: 404
+    end
+  end
 end
 
