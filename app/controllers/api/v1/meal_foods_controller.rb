@@ -13,4 +13,20 @@ class Api::V1::MealFoodsController < ApplicationController
       end
     end
   end
+
+  def destroy
+    begin
+      food = Food.find(params[:id])
+      meal = Meal.find(params[:meal_id])
+      meal_food = MealFood.find_by(meal: meal, food: food)
+      meal_food.destroy
+      render json: { message: "Successfully removed #{food.name} from #{meal.name}" }
+    rescue => error
+      if error.to_s.include?('Couldn\'t find Meal')
+        render json: { error: 'Meal not found' }, status: 404
+      elsif error.to_s.include?('Couldn\'t find Food')
+        render json: { error: 'Food not found' }, status: 404
+      end
+    end
+  end
 end
