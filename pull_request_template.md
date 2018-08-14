@@ -7,8 +7,6 @@
 
 # Description:
 
-# Fixes
-
 
 # Check the correct boxes
 
