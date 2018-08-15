@@ -9,3 +9,8 @@
 Food.create!(name: 'Chipotle Tacos', calories: 950)
 Food.create!(name: 'Breakfast Bar', calories: 200)
 Food.create!(name: 'Bacon and Jalapeño Mac & Cheese', calories: 1200)
+
+Meal.create!(name: 'Breakfast')
+Meal.create!(name: 'Lunch')
+Meal.create!(name: 'Dinner')
+Meal.create!(name: 'Snacks')
