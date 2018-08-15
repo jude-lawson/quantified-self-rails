@@ -1,24 +1,27 @@
-# README
+# Quantified Self Rails API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Contributing
 
-Things you may want to cover:
+Pull Requests are welcome!
 
-* Ruby version
+Please be sure to document the following in your PR:
 
-* System dependencies
+- If it's a bug, define the expected behavior versus the current behavior
+- Document suggested solution
+- List changes made, highlighting key changes in functionality
+- List any test coverage changes needed
 
-* Configuration
+### Setting up for Contribution
 
-* Database creation
+- Clone down this repository
+```
+git clone git@github.com:jude-lawson/quantified-self-rails.git
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Run `bundle install` to install necessary dependencies
+- Run `rspec` in the project repo to ensure that all tests are passing
+- Test file architecture is as follows:
+  - All model tests should be in `spec/models` and should be named something like `<model_name>_spec.rb`
+  - All endpoint tests should be in `spec/api/v1/requests` and should be named something like `<model_name>_requests_spec.rb`
+- Each model should have its own controller nested under `app/controllers/api/v1/`
+- Nested resources can have their own folder in `app/controller/api/v1`, such as `highest_calorie_food` being accessed via a `highest_calorie_foods_controller` in `app/controllers/api/v1/meals/highest_calorie_foods_controller.rb`
